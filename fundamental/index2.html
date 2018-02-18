@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<title>Judul</title>
+
+	
+</head>
+
+<body>
+
+	<div id="app">
+			<p v-show="isNinja">Invisible like a ninja!</p>
+  			<p v-show="!isNinja">Here I am!</p>
+  
+ 			 <button v-on:click="isNinja = !isNinja">Toggle Ninja Skills</button>
+ 			 <br>
+
+<!-- bedanya pake show sama if else, kalo show, component nya ga hilang. hanya css nya saja di hidden.
+	kalo pake if else, komponenya hilang 
+https://vuejs.org/v2/guide/conditional.html -->
+		<p v-if="itemStock>10">{{itemStock}} barang tersedia </p>
+		<p v-else-if="itemStock>0 || itemStock<=10"> segera barang mau habis </p>
+		<p v-else> maaf barang habis</p>
+
+
+		<template v-if="itemStock>50">
+		<p>special offer</p>
+		<p>save 90% banyak stop nya</p>
+		</template>
+
+		<div v-html="html"></div>
+		<h1 v-once>{{movieTitle}}</h1> 
+		<!-- v once, ga akan berubah model nya meskipun di ubah ketika button di pencet-->
+		<button v-on:click='movieTitle="Matrix Indosat"' >ganti</button>	
+
+		<br>
+		<!--v-model.trim 
+			.lazy =  muncul ketika cursor nya pindah-->
+			<input type="text" v-model.lazy="name">
+			  <p>You entered: {{ name }}</p>
+			  <br>
+			  <input type="text" v-model.number="age">
+			  <p>You entered: {{ age }}</p>
+			  <p>type : {{typeof age}}</p>
+
+	</div> 	
+	<script src="vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+					itemStock:51,
+				  	name: '',
+				  	isNinja: true,
+				    age: 27,
+				    movieTitle: 'the matrix',
+				    html: '<h1>hello world</h1>'
+				  }
+			});
+	</script>
+</body>
+</html>

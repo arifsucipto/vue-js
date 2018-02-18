@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<title>index 3</title>
+
+	
+</head>
+
+<body>
+
+	<div id="app">
+		<h1>Movies</h1>
+
+
+		 <input type="password" placeholder="Enter your name" v-model = "password">
+  
+		 <p v-if="password.length>8">Awesome! Your password is longer than 8 characters.</p>
+  		<p v-else-if="password.length > 0">Please enter a longer password.</p>
+  		<p v-else>Please enter a password.</p>
+
+
+		<ol>
+		    <li v-for="n in categories">{{n.name}}
+		      <ul>
+		        <li v-for="i in n.sub">{{i}}</li>
+		      </ul>
+		    </li>
+		  </ol>
+
+		<ul>
+			<li v-for="title in movieTitles">{{title}}</li>
+		</ul>
+
+		<ul>
+			<li v-for="(value, property, index) in person">({{index}}) {{property}}  : {{value}}</li>
+		</ul>
+
+		  <ul>
+		    <li v-for="n in numbers">{{ n }}</li>
+		  </ul>
+		  <input type="text" v-model="int">
+		  <button v-on:click="changeNumber()">Change Number</button>
+		  <button v-on:click="tambahNomor(int)">tambah 2</button>
+
+		<ul>
+			<li v-for="(n, index) in 10">
+			{{n}} * {{index}} = {{n * index}}
+			</li>
+		</ul>
+
+
+		
+
+		<h1>{{companyName}}</h1>
+		<table border="1">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>title</th>
+				<th>company name</th>
+				<th>index</th>
+			</tr>
+			</thead>
+			<tbody>
+				<!-- v bind key biar loop nya ada id unik nya. -->
+			<tr v-for="(employee, index) in employees" v-bind:key="employee.id">
+				<td>{{employee.id}}</td>
+				<td>{{employee.name}}</td>
+				<td>{{employee.title}}</td>
+				<td>{{companyName}}</td>
+				<td>{{index}}</td>
+			</tr>
+			</tbody>
+		</table>
+		<br>
+		<input type="text" v-on:keyup.enter="findEmployee(key)" v-model.number="key">
+		<p>{{namaEmployee}}</p>
+		<p>{{titleEmployee}}</p>
+
+
+	</div> 	
+	<script src="vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+					numbers: [ 1, 2, 3, 4, 5 ],
+					int: '',
+					movieTitles: ['The Matrix', 'The Matrix: Reloaded', 'The Matrix Revolutions'],
+					employees: [
+				      { id: 1, name: 'Abby', title: 'Accountant' },
+				      { id: 2, name: 'Andy', title: 'Marketing Manager' },
+				      { id: 3, name: 'Brandon', title: 'Vue.js Expert' }
+			    	],
+			   		 companyName: 'VueX Ltd.',
+			   		 namaEmployee: '',
+			   		 titleEmployee: '',
+			   		 key : '',
+			   		 person: {
+					    	firstName: 'arif',
+					      	lastName: 'sucipto',
+					     	age: 30
+					    },
+					  password: '',
+					    categories: [
+					    	{ name: 'JavaScript', sub: ['Vue.js', 'React', 'Angular2'] },
+					      { name: 'Databases', sub: ['MySQL', 'PostgreSQL', 'MariaDB'] },
+					      { name: 'Operating Systems', sub: ['macOS', 'Linux', 'Windows'] }
+					    ]
+				  },
+			methods:{
+				findEmployee: function(key){
+  					this.namaEmployee = this.employees[key].name;
+  					this.titleEmployee= this.employees[key].title;
+  					},
+  				changeNumber: function() {
+			      Vue.set(this.numbers, 1, 10);
+			      alert(this.numbers[1]);
+			    	},
+			    tambahNomor: function(int) {
+			      Vue.set(this.numbers, int, this.numbers[int] + 20);
+			      
+			    	}
+  				
+  				
+				}
+			});
+	</script>
+</body>
+</html>
+

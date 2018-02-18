@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<title>index 3</title>
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+
+<body>
+
+	<div id="app">
+		<div class="shape"
+	       v-for="shape in shapes" 
+	       v-bind:class="[ shape.shape, shape.direction ? shape.direction : '', { animate: shape.animate } ]">
+	         
+	      </div>
+<br>
+<br>
+<div></div>
+		 <ol>
+		    <li v-for="movie in formattedMovies">{{movie}}</li>
+		 </ol>
+		 <button v-on:click="addMovie">Add Movie</button>
+		<input type="text" v-model="searchQuery">
+  
+		  <p v-if="isSearching">Searching...</p>
+		  <div v-else>
+		    <ol>
+		      <li v-for="result in results">{{ result }}</li>
+		    </ol>
+		  </div>
+		  <p>{{ counter }}</p>
+		  <!-- fullname ga di ambil dari data, melainkan fungi di computed -->
+		  <p>{{ fullName | uppercase(false) | removespace}}</p>
+		  <p>{{ fullName | uwFilter}}</p>
+		  
+		  <button v-on:click="counter++">Increase Counter</button>
+		  <button v-on:click="changeName">Change Name</button>
+		  <button v-on:click="changeNameSetter">Change Name (setter)</button>
+
+		   <button v-on:click="hello">Hello (v-on)</button>
+		  <button @click="hello">Hello (shorthand)</button>
+		  
+		  <p v-bind:title="firstName">Hover me (v-bind)</p>
+		  <p :title="firstName">Hover me (shorthand)</p>
+
+	</div>
+	<script src="vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+		  	 data: {
+			    counter: 1,
+			    firstName: 'arif',
+			    lastName: 'sucipto',
+			    searchQuery:'',
+			    results: [],
+    			isSearching: false,
+    			movies: [
+			      { name: 'The Matrix', year: 1999 },
+			      { name: 'The Matrix Reloaded', year: 2003 },
+			      { name: 'The Matrix Revolutions', year: 2003 }
+			    ],
+			    	shapes: [
+			    	{ shape: 'circle' },
+			      { shape: 'square', animate: true },
+			      { shape: 'triangle', direction: 'up' },
+			      { shape: 'triangle', direction: 'right', animate: true },
+			      { shape: 'triangle', direction: 'down' },
+			      { shape: 'triangle', direction: 'left', animate: true }
+			    ]
+			  },
+			  methods: {
+
+			  	 hello: function() {
+				    	alert("Hello World!");
+				    },
+				  changeName: function() {
+			  	  this.firstName = 'evi';
+			    	this.lastName = 'april';
+				  },
+				    changeNameSetter: function() {
+				    	this.fullName = 'muhammad adyan zulikram';
+				    },
+				    addMovie: function() {
+			    	this.movies.push({
+			      	name: 'The Fast and the Furious',
+			        year: 2001
+			      	});
+   				 }
+			  },
+			  computed: {
+			  	formattedMovies: function() {
+			  		return this.movies.map(function(movie){
+			  			return movie.name + '(' + movie.year + ')';
+			  		});
+			  	},
+			  	fullName: {
+			    	get: function() {
+			      	alert("Assembling full name...");
+			    		return this.firstName + ' ' + this.lastName;
+			      },
+			      set: function(newValue) {
+			      	alert("Setting new name: " + newValue);
+			        var parts = newValue.split(' ');
+				      this.firstName = parts[0];
+			  	    this.lastName = parts[parts.length - 1]; 
+			      }
+			    }
+			  },
+			   watch: {
+				  searchQuery: function(query) {
+				      this.isSearching = true;
+				      var vm = this;
+				      
+				      setTimeout(function() {
+				      	vm.results = ['JavaScript', 'PHP', 'MySQL'];
+								vm.isSearching = false;
+				      }, 500);
+				    },
+
+				   movies: function(movies){
+				   		var newMovie = movies[movies.length -1];
+				   		alert(newMovie.name + 'year' + newMovie.year);
+				   }
+				 },
+			 filters: {
+			 	uwFilter:function(value){
+			 		if (!value) {
+			      	return '';
+			      }
+
+			      var part = value.toString().split(' ');
+			      var upperpart = part.map( function (word) {
+			      	return word.charAt(0).toUpperCase() + word.slice(1);
+			      });
+			      
+
+			      return upperpart.join(' ');
+			 	},
+			  	uppercase: function(value, onlyFirstCharacter) {
+			    	if (!value) {
+			      	return '';
+			      }
+			      
+			      value = value.toString();
+			      
+			      if (onlyFirstCharacter) {
+			      	return value.charAt(0).toUpperCase() + value.slice(1);
+			      } else {
+			      	return value.toUpperCase();
+			      }
+			    },
+			    removespace: function( value ) {
+			          if( value ) {
+			              return value.replace(/\s+/g, '');
+			          }
+			      }
+			  }
+		});
+	</script>
+
+</body>
+
+</html>

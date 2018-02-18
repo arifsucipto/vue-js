@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<title>Judul</title>
+
+	
+</head>
+
+<body>
+	
+	<div id="app">
+
+		<input type="text" v-on:keyup="inputFirst" placeholder="first name">
+		<p> firstname : {{firstinput}}</p>
+		<br><br>
+		<input type="text" v-on:keyup.ctrl.enter="inputLast" placeholder="Last name">
+		<p> lastname : {{lastinput}}</p>
+		<br>
+		<form action="" method="GET" v-on:submit.prevent>
+			<input type="submit" value="submit">
+		</form>
+
+		<input type="text" v-on:keyup.space.enter="presEnter()">
+		<input type="text" v-on:keyup.shift.enter="presShift()">
+		<!--v-on:click.once = hanya sekali ke trigger
+		--v-on:click.stop = ga akan ke panggil 
+		v-on:click.prevent = mencegah suatu atribut ke klik-->
+		<!--<button v-on:click.shift kalo mau klik tambah shift-->
+		<button v-on:click="clickButton(title)">click</button>
+		<a v-bind:href="url">Website</a>
+		<p>Title : {{title}}</p>
+		<p>Released : {{release}}</p>
+		<p>The Movie is {{ release < 2000 ? 'old' : 'new'}}</p>
+		<p>The Movie is {{ isOld(release)}}</p>
+		<div v-bind:title="title + release">hover</div>
+	  <h1>{{ message }}</h1>
+	  <h2>{{age * 2}}</h2>
+	  <h2>{{age < 2 ? 'baby' : 'old'}}</h2>
+	  <h2>{{ name.split(' ')[0]}}</h2>
+	  <h2>{{ name.split('').reverse().join('')}}</h2>
+	  <h2>{{ getFullName() }}</h2>
+	  <h2>{{ getNameVariable('evi', 'apriliana') }}</h2>
+	  <h2>{{ getNameVariable(first, last) }}</h2>
+	  <h2>{{ getNameObject(first, last).name }}</h2>
+	</div>
+	<script src="vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+		  	data: {
+		  		message: 'Hello World!',
+		  		age: 4,
+		  		name:'arif sucipto',
+		  		first:'muhammad',
+		  		last:'adyan zulikram',
+		  		url:'http://www.youtube.com',
+		  		title:'matrix',
+		  		release:1981,
+		  		firstinput: '',
+		  		lastinput: ''
+  			},
+  			methods: {
+  				inputFirst: function(event){
+  					this.firstinput = event.target.value;
+  				},
+  				inputLast: function(event){
+  					this.lastinput = event.target.value;
+  				},
+  				presShift: function(){
+  					alert("shit + enter di tekan");
+  				},
+  				presEnter: function(){
+  					alert("space atau enter di tekan");
+  				},
+  				clickButton: function(message){
+  					alert(message);
+  				},
+  				getFullName: function(){
+  					return this.first + ' ' + this.last;
+
+  				},
+  				getNameVariable: function(first, last){
+  					return first + ' ' + last;
+  				},
+  				getNameObject: function(first, last){
+  					return {
+  						name: first + ' ' + last
+  					};
+  				},
+  				isOld: function(year){
+  					return year < 2000 ? 'old' : 'new';
+  				}
+  			}
+		});
+	</script>
+
+</body>
+
+</html>
