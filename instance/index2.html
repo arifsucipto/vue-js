@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<title>Judul</title>
+
+
+</head>
+
+  <body>
+  	<div id="app1">
+  		<contact-us></contact-us>
+  		<!-- <support-us></support-us> ga akan ke panggil karena component support us cuman buat app2 -->
+  	</div>
+
+  	<div id="app2">
+  		<h2> from app2</h2>
+  		<contact-us></contact-us>
+  		<support-us></support-us>
+  	</div>
+
+
+  	<script src="vue.js"></script>
+
+	<script type="text/javascript">
+		//cara untuk declare component secara global, jadi di vue instance bs di panggil kapan pun
+		Vue.component('contact-us',{
+			data: function(){
+				return {
+					email: 'info@company.com',
+					};
+			},
+			template :`
+				<div>
+					<h1> contact us </h1>
+					<p> please contact us at : {{email}}</p>
+				</div>
+				`
+		});
+
+		var supportUs = {
+			data: function(){
+				return {
+					support: 'patreon, paypal',
+					};
+			},
+			template :`
+				<div>
+					<h1> support us </h1>
+					<p> please support us at : {{support}}</p>
+				</div>
+				`
+			};
+
+		new Vue({
+			el: '#app1'
+		});
+
+		new Vue({
+			el: '#app2',
+			components : {'support-us' : supportUs}
+			//naming convention buat components bs pake kebabcase 'support-us' harus pake ketik. atau camel case
+			//supportUs . itu ga usah pake petik bs supportUs : supportUs
+
+		});
+
+		//untuk declare component secara local, maka masuk di vue instance nya sebagai component
+		
+  	</script>
+
+  </body>
+</head>
