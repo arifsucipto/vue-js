@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<title>Judul</title>
+
+
+</head>
+
+<body>
+
+	<div id="vm1">
+      <h1>{{ name }} </h1>
+  </div>
+
+  <div id="vm2">
+    <button @click="showName"> click</button>
+  </div>
+
+
+  <script src="vue.js"></script>
+
+	<script type="text/javascript">
+  var vm1 = new Vue({
+    el: '#vm1',
+    data:{
+      name: 'Vue Instance #1'
+    }
+  });
+
+  var vm2 = new Vue({
+    el: '#vm2',
+    methods: {
+      showName: function() {
+        alert('show name dari instance 2' + vm1.name);
+      }
+    },
+    data:{
+      name: 'Vue Instance #1'
+    }
+  });
+
+  setTimeout(function(){
+    vm1.name = "call vue from outside"},2000);
+
+
+  </script>
+
+  </body>
+</head>
