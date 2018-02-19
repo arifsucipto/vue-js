@@ -10,12 +10,27 @@
 
 	<div id="vm1">
       <h1>{{ name }} </h1>
+      <p>Counter: {{ counter }}</p>
+      <button @click="counter++">Increase Counter</button>
+      <button @click="person.name.firstName = 'Andy'">Change First Name</button>
+
+     <h1 ref="message">{{ message }}</h1>
+     <button ref="myButton" @click="clickedButton">Click Me!</button>
+
   </div>
 
   <div id="vm2">
     <button @click="showName"> click</button>
   </div>
 
+  </div>
+
+  <div id="vm3">
+    <h1>{{ vm3 }}</h1>
+  </div>
+
+  <div id="vm4">    
+  </div>
 
   <script src="vue.js"></script>
 
@@ -23,9 +38,64 @@
   var vm1 = new Vue({
     el: '#vm1',
     data:{
-      name: 'Vue Instance #1'
+      name: 'Vue Instance #1',
+      message: 'Hello World!',
+      counter: 1,
+      person: {
+        name: {
+          firstName: 'Bo',
+          lastName: 'Andersen'
+        }
+      }
+    },
+
+    methods: {
+      clickedButton: function() {
+        console.log(this.$refs);
+        this.$refs.myButton.innerText = this.message;
+      }
     }
   });
+
+
+/*  kalo pake $refs maka langsung ke html. ga ke vue nya. kalo vm1.message ke vue nya */
+setTimeout(function() {
+  vm1.$refs.message.innerText = 'This is a test';
+}, 2000);
+
+setTimeout(function() {
+  vm1.message = 'This is another test';
+}, 4000);
+
+/*vm1.$watch('counter', function(newValue, oldValue) {
+  alert('Counter changed from ' + oldValue + ' to ' + newValue + '!');
+});*/
+
+vm1.$watch('person.name.firstName', function(newValue, oldValue) {
+  alert('First name changed from ' + oldValue + ' to ' + newValue + '!');
+});
+
+/*vm1.$watch('person.name', function(newValue, oldValue) {
+  alert('The first name was changed from ' + oldValue.firstName + ' to ' + newValue.firstName + '!');
+}, { deep: true }); */
+
+var unwatch = vm1.$watch(
+  function() {
+    return this.counter;
+  },
+  function(newValue, oldValue) {
+    alert('Counter changed from ' + oldValue + ' to ' + newValue + '!');
+  }
+);
+
+setTimeout(function() {
+  unwatch();
+}, 5000);
+
+//setelah 5 detik vm1 akan di hancurkan jadi ga bs di klik button nya
+setTimeout(function() {
+  vm1.$destroy();
+}, 7000);
 
   var vm2 = new Vue({
     el: '#vm2',
@@ -43,6 +113,31 @@
     vm1.name = "call vue from outside"},2000);
 
 
+
+  var vm3 = new Vue({   
+    data:{
+      vm3: 'Vue Instance #2'
+    }
+  });
+//kalo mau multi line, petik nya pake yang deket esc
+var vm4 = new Vue({   
+    template:`
+     <div> 
+     <h1> {{ vm4 }} </h1>
+      </div> `,
+    data:{
+      vm4: 'Vue Instance #3'
+    }
+  });
+
+//cara mount yang lain
+vm4.$mount();
+document.getElementById('vm4').appendChild(vm4.$el);
+
+
+//kalo mount pake vue pake # . 
+  vm3.$mount('#vm3'); 
+ // vm3.$mount(document.getElementById('vm3'))
   </script>
 
   </body>
